@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            allPopups="true"
+            locationURI="popup:org.eclipse.ui.navigator.ProjectExplorer#PopupMenu">
+         <menu
+               id="org.eclipse.contributions.bpmn2rest.acceleo.module.ui.mainMenu"
+               label="BPMN 2 REST">
+            <command
+                  commandId="org.eclipse.contributions.bpmn2rest.acceleo.module.ui.commands.transform"
+                  id="org.eclipse.contributions.bpmn2rest.acceleo.module.ui.transformOption"
+                  mnemonic="transform_cmd"
+                  style="push">
+            </command>
+            <visibleWhen>
+               <with
+                     variable="activeMenuSelection">
+                  <iterate
+                        ifEmpty="false">
+                     <adapt
+                           type="org.eclipse.core.resources.IResource">
+                        <test
+                              property="org.eclipse.core.resources.extension"
+                              value="bpmn">
+                        </test>
+                     </adapt>
+                  </iterate>
+               </with>
+            </visibleWhen>
+         </menu>
+      </menuContribution>
+   </extension>
+   <extension
+         point="org.eclipse.ui.commands">
+      <command
+            categoryId="bpmn2rest.commands.category"
+            id="org.eclipse.contributions.bpmn2rest.acceleo.module.ui.commands.transform"
+            name="Run BPMN 2 REST">
+      </command>
+      <category
+            id="bpmn2rest.commands.category"
+            name="BPMN2REST commands">
+      </category>
+   </extension>
+   <extension
+         point="org.eclipse.ui.handlers">
+      <handler
+            class="org.eclipse.contributions.bpmn2rest.acceleo.module.ui.commands.TransformBpmn2RestHandler"
+            commandId="org.eclipse.contributions.bpmn2rest.acceleo.module.ui.commands.transform">
+      </handler>
+   </extension>
+   <extension
+         point="org.eclipse.bpmn2.modeler.runtime">
+      <runtime
+            class="org.eclipse.contributions.bpmn2rest.modeler.Bpmn2RestRuntimeExtension"
+            description="BPMN2REST BPMN2 Modeler Plugin Extension"
+            id="org.eclipse.contributions.bpmn2rest.modeler.runtime"
+            name="BPMN2REST Extension">
+      </runtime>
+      <modelExtension
+            description="BPMN2REST Operation extension for supporting REST features"
+            id="org.eclipse.contributions.bpmn2rest.modeler.extensions.Operation"
+            name="BPMN2REST Operation Extension"
+            runtimeId="org.eclipse.contributions.bpmn2rest.modeler.runtime"
+            type="Operation">
+         <property
+               description="URL or path to the endpoint of this operation"
+               label="REST Service URL"
+               name="rest_url">
+         </property>
+         <property
+               description="HTTP method to use on this RESTful service"
+               label="REST Service HTTP Method"
+               name="rest_method"
+               value="GET">
+         </property>
+         <property
+               description="Prepend the controller&apos;s name to the URL. It avoids having the same REST URL for the same Operation existing on two different Participants by preffixing the Participant&apos;s name and making it unique along the entire BPMN."
+               label="Add Controller Preffix to URL"
+               name="rest_prepend_controller"
+               type="EBoolean"
+               value="false">
+         </property>
+      </modelExtension>
+      <propertyTab
+            class="default"
+            features="rest_url rest_method rest_prepend_controller"
+            id="org.eclipse.contributions.bpmn2rest.modeler.propertyTabs.Operation"
+            label="BPMN2REST Extension"
+            popup="true"
+            runtimeId="org.eclipse.contributions.bpmn2rest.modeler.runtime"
+            type="Operation">
+      </propertyTab>
+   </extension>
+   <extension
+         point="org.eclipse.emf.validation.constraintProviders">
+      <category
+            id="org.eclipse.contributions.bpmn2rest.validation.category"
+            name="BPMN2REST Validation">
+      </category>
+      <constraintProvider
+            cache="true"
+            mode="Batch">
+         <constraints
+               categories="org.eclipse.contributions.bpmn2rest.validation.category">
+            <constraint
+                  id="org.eclipse.contributions.bpmn2rest.validation.oneCollaboration"
+                  isEnabledByDefault="true"
+                  lang="OCL"
+                  mode="Batch"
+                  name="HasOneCollaboration"
+                  severity="ERROR"
+                  statusCode="1">
+               <message>
+                  The model must contain only one collaboration
+               </message>
+               <target
+                     class="Definitions">
+               </target>
+               <![CDATA[
+			   		self.rootElements->select(e | e.oclIsKindOf(Collaboration))->size() = 1
+			   ]]>
+            </constraint>
+            <constraint
+                  id="org.eclipse.contributions.bpmn2rest.validation.twoParticipants"
+                  isEnabledByDefault="true"
+                  lang="OCL"
+                  mode="Batch"
+                  name="HasAtLeastTwoParticipantsConstraint"
+                  severity="ERROR"
+                  statusCode="1">
+               <message>
+                  Collaborations must have at least 2 participants
+               </message>
+               <target
+                     class="Collaboration">
+               </target>
+               <![CDATA[
+			   		self.participants->size() > 1
+			   ]]>
+            </constraint>
+            <constraint
+                  id="org.eclipse.contributions.bpmn2rest.validation.oneValidInterface"
+                  isEnabledByDefault="true"
+                  lang="OCL"
+                  mode="Batch"
+                  name="HasAtLeastOneValidInterfaceConstraint"
+                  severity="ERROR"
+                  statusCode="1">
+               <message>
+                  There must exists at least one participant implementing one interface
+               </message>
+               <target
+                     class="Collaboration">
+               </target>
+               <![CDATA[
+			   		self.participants->select(p | p.interfaceRefs->size() > 0)->size() > 0
+			   ]]>
+            </constraint>
+            <constraint
+                  id="org.eclipse.contributions.bpmn2rest.validation.oneCommunication"
+                  isEnabledByDefault="true"
+                  lang="OCL"
+                  mode="Batch"
+                  name="HasAtLeastOneCommunicationConstraint"
+                  severity="ERROR"
+                  statusCode="1">
+               <message>
+               	There must exist at least one message flow linked to a message between participants
+               </message>
+               <target
+                     class="Collaboration">
+               </target>
+               <![CDATA[
+			   		self.messageFlows->select(mf | mf.messageRef <> null)->size() > 0
+			   ]]>
+            </constraint>
+            <constraint
+                  id="org.eclipse.contributions.bpmn2rest.validation.distinctServiceMessages"
+                  isEnabledByDefault="true"
+                  lang="OCL"
+                  mode="Batch"
+                  name="HasDistinctServiceMessages"
+                  severity="ERROR"
+                  statusCode="1">
+               <message>
+                  Service providers can&apos;t have two operations with the same input message
+               </message>
+               <target
+                     class="Collaboration">
+               </target>
+               <![CDATA[
+			   		self.participants->forAll(p | 
+				   		p.interfaceRefs
+				   		->collect(i | i.operations)->flatten()
+				   		->forAll(op1, op2 | 
+				   				op1.inMessageRef <> op2.inMessageRef or
+				   				op1 = op2 or
+				   				self.messageFlows->select(mf |
+				   					mf.messageRef = op1.inMessageRef and
+				   					(
+				   						mf.targetRef = p or
+				   						(not p.processRef.oclIsUndefined() and p.processRef.flowElements->includes(mf.targetRef))
+				   					)
+				   				)->size() = 0
+				   		)
+			   		)
+			   	]]>
+            </constraint>
+         </constraints>
+         <package
+               namespaceUri="http://www.omg.org/spec/BPMN/20100524/MODEL-XMI">
+         </package>
+      </constraintProvider>
+   </extension>
+   <extension
+         point="org.eclipse.emf.validation.constraintBindings">
+      <clientContext
+            default="false"
+            id="org.eclipse.contributions.bpmn2rest.acceleo.module.ui.clientContext">
+         <enablement>
+            <test
+                  property="org.eclipse.bpmn2.modeler.property.targetRuntimeId"
+                  value="org.eclipse.contributions.bpmn2rest.modeler.runtime">
+            </test>
+         </enablement>
+      </clientContext>
+      <binding
+            category="org.eclipse.contributions.bpmn2rest.validation.category"
+            context="org.eclipse.contributions.bpmn2rest.acceleo.module.ui.clientContext">
+      </binding>
+   </extension>
+</plugin>
