@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<site>
+   <feature id="org.eclipse.contributions.bpmn2rest.plugin">
+      <category name="bpmn2rest_category"/>
+   </feature>
+   <category-def name="bpmn2rest_category" label="BPMN 2 REST Plugin"/>
+</site>

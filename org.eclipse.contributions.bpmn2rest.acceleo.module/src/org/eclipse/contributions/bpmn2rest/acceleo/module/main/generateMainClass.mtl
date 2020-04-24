@@ -1,0 +1,30 @@
+[comment encoding = ISO-8859-1 /]
+[module generateMainClass('http://www.omg.org/spec/BPMN/20100524/MODEL')]
+[import org::eclipse::contributions::bpmn2rest::acceleo::module::main::queries /]
+
+[template public generateMainClass(root : Definitions)]
+[file ('Main.java', false, 'Cp1252')]
+import static spark.Spark.*; // use Spark framework resources
+
+public class Main {
+
+	/**
+	 * service route definitions using Spark
+	 * 
+	 * @param  String['[]'/] args
+	 * @return void
+	 */
+    public static void main(String['[]'/] args) {
+		[for (p : Participant| getServiceProviders(root))]		
+
+		/* [p.name/] exposed services */
+		[for (op : Operation | getProvidedOperations(p))]
+
+    	[getServiceHttpMethod(op)/]("[getServiceUrl(op, p)/]", (req, res) => [toUpperCamelCase(p.name)/]Controller.[toJavaMethod(op.name)/](req, res));
+		[/for]
+		[/for]
+    }
+
+}
+[/file]
+[/template]

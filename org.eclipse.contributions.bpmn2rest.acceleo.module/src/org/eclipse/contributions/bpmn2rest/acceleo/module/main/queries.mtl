@@ -1,0 +1,46 @@
+[comment encoding = Cp1252 /]
+[module queries('http://www.omg.org/spec/BPMN/20100524/MODEL')/]
+
+[query public getServiceProviders(deff : Definitions) : Set(Participant) 
+	= deff.rootElements
+	->filter(Collaboration)
+	->asSequence()
+	->first().participants
+	->select(pp:Participant | 
+		pp.interfaceRefs->select(i:Interface | 
+			i.operations->select(o:Operation | 
+				MessageFlow.allInstances()->exists(mf:MessageFlow|mf.messageRef = o.inMessageRef)
+			)->notEmpty()
+		)->notEmpty()
+	)
+/]
+
+[query public getProvidedOperations(p : Participant) : Set(Operation) 
+	= p.interfaceRefs
+	->collect(i:Interface | i.operations
+		->select(o:Operation | 
+			MessageFlow.allInstances()
+			->select(mf:MessageFlow|mf.messageRef = o.inMessageRef)
+			->select(mf:MessageFlow|mf.targetRef = p or p.processRef.eAllContents()->includes(mf.targetRef))
+			->size() = 1
+		)
+	)
+	->flatten()
+	->asSet()
+/]
+
+[query public getServiceHttpMethod(arg0 : Operation) : String
+	= invoke('org.eclipse.contributions.bpmn2rest.acceleo.module.BPMN2ServiceFacade', 'getServiceHttpMethod(org.eclipse.bpmn2.Operation)', Sequence{arg0})
+/]
+
+[query public getServiceUrl(arg0 : Operation, arg1 : Participant) : String
+	= invoke('org.eclipse.contributions.bpmn2rest.acceleo.module.BPMN2ServiceFacade', 'getServiceHttpUrl(org.eclipse.bpmn2.Operation, org.eclipse.bpmn2.Participant)', Sequence{arg0, arg1})
+/]
+
+[query public toUpperCamelCase(arg : OclAny) : String 
+	= invoke('org.eclipse.contributions.bpmn2rest.acceleo.module.CommonHelper', 'toUpperCamelCase(java.lang.String)', Sequence{arg.toString()})
+/]
+
+[query public toJavaMethod(arg : OclAny) : String 
+	= invoke('org.eclipse.contributions.bpmn2rest.acceleo.module.CommonHelper', 'toJavaMethod(java.lang.String)', Sequence{arg.toString()})
+/]

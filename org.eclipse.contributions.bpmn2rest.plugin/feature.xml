@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feature
+      id="org.eclipse.contributions.bpmn2rest.plugin"
+      label="BPMN2REST Plugin"
+      version="1.0.0"
+      provider-name="Lucas Pereyra - UNLPam">
+
+   <description>
+      Acceleo based Java code generation tool. BPMN2REST is a MDA based
+plugin for Eclipse BPMN2 Modeler that allows Java code generation
+from BPMN Collaboration diagrams.
+Every communication between participants that represent a REST
+service invoice, is mapped by the BPMN2REST code generation engine
+to create a setup in the Java Spark Framework that allows users
+to easily implement and deploy RESTful web services.
+
+BPMN2REST plugin for Eclipse IDE is a free and open source project. Contact lucas_pereyra@hotmail.es for details about it.
+   </description>
+
+   <copyright>
+      BPMN2REST plugin for Eclipse is a free and open source project.
+   </copyright>
+
+   <license url="">
+      BPMN2REST plugin for Eclipse is a free and open source project.
+   </license>
+
+   <requires>
+      <import plugin="org.eclipse.core.runtime"/>
+      <import plugin="org.eclipse.emf.ecore"/>
+      <import plugin="org.eclipse.emf.ecore.xmi"/>
+      <import plugin="org.eclipse.graphiti" version="0.14.0"/>
+      <import plugin="org.eclipse.graphiti.ui" version="0.14.0"/>
+      <import plugin="org.eclipse.gef"/>
+      <import plugin="org.eclipse.bpmn2" version="1.5.0" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.bpmn2.edit" version="1.5.0" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.bpmn2.editor" version="1.5.0" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.bpmn2.modeler.core" version="1.5.1" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.bpmn2.modeler.ui" version="1.5.1" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.emf.transaction"/>
+      <import plugin="org.eclipse.emf.databinding"/>
+      <import plugin="org.eclipse.emf.edit.ui"/>
+      <import plugin="org.eclipse.ui.views.properties.tabbed"/>
+      <import plugin="org.eclipse.jface.databinding"/>
+      <import plugin="org.apache.xerces" version="2.9.0" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.core.resources"/>
+      <import plugin="org.eclipse.ui"/>
+      <import plugin="org.eclipse.jdt.core"/>
+      <import plugin="org.eclipse.ocl"/>
+      <import plugin="org.eclipse.ocl.ecore"/>
+      <import plugin="org.eclipse.acceleo.common" version="3.3.0" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.acceleo.model" version="3.3.0" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.acceleo.profiler" version="3.3.0" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.acceleo.engine" version="3.3.0" match="greaterOrEqual"/>
+      <import plugin="com.google.guava"/>
+      <import plugin="org.eclipse.emf.codegen" version="2.19.0" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.acceleo.parser" version="3.7.8" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.contributions.bpmn2rest.acceleo.module" version="1.0.0" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.graphiti" version="0.16.0" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.graphiti.ui" version="0.16.0" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.emf.validation" version="1.8.0" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.emf.validation.ocl" version="1.4.0" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.core.expressions" version="3.6.500" match="greaterOrEqual"/>
+   </requires>
+
+   <plugin
+         id="org.eclipse.bpmn2.modeler.examples.customtask"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.contributions.bpmn2rest.acceleo.module"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"/>
+
+   <plugin
+         id="org.eclipse.contributions.bpmn2rest.acceleo.module.ui"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+</feature>

@@ -1,0 +1,27 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Acceleo BPMN2REST Module Runtime Plugin
+Bundle-SymbolicName: org.eclipse.contributions.bpmn2rest.acceleo.module
+Bundle-Version: 1.0.0.qualifier
+Bundle-Activator: org.eclipse.contributions.bpmn2rest.acceleo.module.Activator
+Bundle-Vendor: Eclipse Modeling Project
+Require-Bundle: org.eclipse.core.runtime,
+ org.eclipse.bpmn2,
+ org.eclipse.emf.ecore,
+ org.eclipse.emf.ecore.xmi,
+ org.eclipse.ocl,
+ org.eclipse.ocl.ecore,
+ org.eclipse.acceleo.common;bundle-version="3.3.0",
+ org.eclipse.acceleo.model;bundle-version="3.3.0",
+ org.eclipse.acceleo.profiler;bundle-version="3.3.0",
+ org.eclipse.acceleo.engine;bundle-version="3.3.0",
+ com.google.guava,
+ org.eclipse.emf.codegen;bundle-version="2.19.0",
+ org.eclipse.acceleo.parser;bundle-version="3.7.8"
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Bundle-ActivationPolicy: lazy
+Eclipse-LazyStart: true
+Export-Package: org.eclipse.contributions.bpmn2rest.acceleo.module,
+ org.eclipse.contributions.bpmn2rest.acceleo.module.main
+Automatic-Module-Name: org.eclipse.contributions.bpmn2rest.acceleo.module
+

@@ -1,0 +1,10 @@
+[comment encoding = UTF-8 /]
+[module main('http://www.omg.org/spec/BPMN/20100524/MODEL')]
+[import org::eclipse::contributions::bpmn2rest::acceleo::module::main::generateMainClass /]
+[import org::eclipse::contributions::bpmn2rest::acceleo::module::main::generateControllerFiles /]
+
+[template public main(root : Definitions)]
+[comment @main /]
+[root.generateMainClass()/]
+[root.generateControllers()/]
+[/template]

@@ -1,0 +1,30 @@
+[comment encoding = ISO-8859-1 /]
+[module generateControllerFiles('http://www.omg.org/spec/BPMN/20100524/MODEL')]
+[import org::eclipse::contributions::bpmn2rest::acceleo::module::main::queries /]
+
+[template public generateControllers(root : Definitions)]
+[for (p : Participant| getServiceProviders(root))]
+[file ('controllers/'.concat(toUpperCamelCase(p.name).concat('Controller.java')), false, 'Cp1252')]
+import spark.Request;
+import spark.Response;
+import spark.Route;
+
+public class [toUpperCamelCase(p.name)/]Controller {
+	[for (op : Operation | getProvidedOperations(p))]
+
+	/**
+	 * controller method for handling [op.name/] operation
+	 * 
+	 * @param  req Request
+	 * @param  res Response
+	 * @return     void
+	 */
+	public static void [toJavaMethod(op.name)/](Request req, Response res) {
+		// code here...
+	}
+	[/for]
+}
+
+[/file]
+[/for]
+[/template]

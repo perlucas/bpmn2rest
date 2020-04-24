@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project default="main" name="org.eclipse.contributions.bpmn2rest.acceleo.module">
+    <property name="ECLIPSE_HOME" value="D:/Programs/Eclipse/java-2019-06/eclipse"/>
+    <property name="ECLIPSE_WORKSPACE" value="../../../../eclipse-workspace"/>
+
+    <!-- The classpath with only the dependencies used by the project -->
+    <path id="org.eclipse.contributions.bpmn2rest.acceleo.module.libraryclasspath">
+        <pathelement location="${ECLIPSE_WORKSPACE}/org.eclipse.contributions.bpmn2rest.acceleo.module/bin"/>
+    </path>
+
+    <path id="org.eclipse.contributions.bpmn2rest.acceleo.module.classpath">
+        <path refid="org.eclipse.contributions.bpmn2rest.acceleo.module.libraryclasspath"/>
+    </path>
+
+    <!-- The classpath with only the jars available in the plugin folder of Eclipse -->
+    <path id="org.eclipse.contributions.bpmn2rest.acceleo.module.libraryclasspath.alljars">
+        <pathelement location="../org.eclipse.contributions.bpmn2rest.acceleo.module/bin"/>
+        <fileset dir="${ECLIPSE_HOME}/plugins/" includes="*.jar"/>
+    </path>
+
+    <path id="org.eclipse.contributions.bpmn2rest.acceleo.module.classpath.alljars">
+        <path refid="org.eclipse.contributions.bpmn2rest.acceleo.module.libraryclasspath.alljars"/>
+    </path>
+
+    <!-- The default task with the jars used by this project -->
+    <target name="main">
+        <java classname="org.eclipse.contributions.bpmn2rest.acceleo.module.main.Main" classpathref="org.eclipse.contributions.bpmn2rest.acceleo.module.classpath">
+            <arg value="${model}"/>
+            <arg value="${target}"/>
+        </java>
+    </target>
+
+    <!--
+        In case of problem you can also try with all the jar available in your Eclipse
+        Keep in mind that having two versions of the same jar can create problems
+    -->
+    <target name="main.alljars">
+        <java classname="org.eclipse.contributions.bpmn2rest.acceleo.module.main.Main" classpathref="org.eclipse.contributions.bpmn2rest.acceleo.module.classpath">
+            <arg value="${model}"/>
+            <arg value="${target}"/>
+        </java>
+    </target>
+</project>
