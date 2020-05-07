@@ -20,7 +20,7 @@ public class Main {
 		/* [p.name/] exposed services */
 		[for (op : Operation | getProvidedOperations(p))]
 
-    	[getServiceHttpMethod(op)/]("[getServiceUrl(op, p)/]", (req, res) => [toUpperCamelCase(p.name)/]Controller.[toJavaMethod(op.name)/](req, res));
+    	[getServiceHttpMethod(op)/]("[getServiceUrl(op, p)/]", (req, res) -> [toUpperCamelCase(p.name)/]Controller.[toJavaMethod(op.name)/](req, res));
 		[/for]
 		[/for]
     }

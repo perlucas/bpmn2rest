@@ -71,13 +71,14 @@ BPMN2REST plugin for Eclipse IDE is a free and open source project. Contact luca
          unpack="false"/>
 
    <plugin
-         id="org.eclipse.contributions.bpmn2rest.acceleo.module"
+         id="org.eclipse.contributions.bpmn2rest.acceleo.module.ui"
          download-size="0"
          install-size="0"
-         version="0.0.0"/>
+         version="0.0.0"
+         unpack="false"/>
 
    <plugin
-         id="org.eclipse.contributions.bpmn2rest.acceleo.module.ui"
+         id="org.eclipse.contributions.bpmn2rest.acceleo.module"
          download-size="0"
          install-size="0"
          version="0.0.0"
