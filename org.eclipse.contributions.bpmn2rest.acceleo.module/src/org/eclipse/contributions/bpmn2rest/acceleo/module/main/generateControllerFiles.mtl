@@ -5,9 +5,10 @@
 [template public generateControllers(root : Definitions)]
 [for (p : Participant| getServiceProviders(root))]
 [file ('controllers/'.concat(toUpperCamelCase(p.name).concat('Controller.java')), false, 'Cp1252')]
+package controllers;
+
 import spark.Request;
 import spark.Response;
-import spark.Route;
 
 public class [toUpperCamelCase(p.name)/]Controller {
 	[for (op : Operation | getProvidedOperations(p))]
@@ -19,8 +20,8 @@ public class [toUpperCamelCase(p.name)/]Controller {
 	 * @param  res Response
 	 * @return     void
 	 */
-	public static void [toJavaMethod(op.name)/](Request req, Response res) {
-		// code here...
+	public static String [toJavaMethod(op.name)/](Request req, Response res) {
+		return "Example Response"; // replace this with the service implementation
 	}
 	[/for]
 }

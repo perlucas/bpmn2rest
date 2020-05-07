@@ -2,9 +2,12 @@
 [module generateMainClass('http://www.omg.org/spec/BPMN/20100524/MODEL')]
 [import org::eclipse::contributions::bpmn2rest::acceleo::module::main::queries /]
 
-[template public generateMainClass(root : Definitions)]
+[template public generateMainClass(root : Definitions) { serviceProviders : Set(Participant) = getServiceProviders(root); }]
 [file ('Main.java', false, 'Cp1252')]
-import static spark.Spark.*; // use Spark framework resources
+import static spark.Spark.*;
+[if (not serviceProviders->isEmpty())]
+import controllers.*;
+[/if]
 
 public class Main {
 
@@ -15,12 +18,12 @@ public class Main {
 	 * @return void
 	 */
     public static void main(String['[]'/] args) {
-		[for (p : Participant| getServiceProviders(root))]		
+		[for (p : Participant| serviceProviders)]		
 
 		/* [p.name/] exposed services */
 		[for (op : Operation | getProvidedOperations(p))]
 
-    	[getServiceHttpMethod(op)/]("[getServiceUrl(op, p)/]", (req, res) -> [toUpperCamelCase(p.name)/]Controller.[toJavaMethod(op.name)/](req, res));
+    	[getServiceHttpMethod(op)/]("[getServiceUrl(op, p)/]", [toUpperCamelCase(p.name)/]Controller::[toJavaMethod(op.name)/]);
 		[/for]
 		[/for]
     }
