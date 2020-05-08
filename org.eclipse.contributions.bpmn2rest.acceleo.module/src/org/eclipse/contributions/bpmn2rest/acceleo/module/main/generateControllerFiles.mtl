@@ -18,7 +18,7 @@ public class [toUpperCamelCase(p.name)/]Controller {
 	 * 
 	 * @param  req Request
 	 * @param  res Response
-	 * @return     void
+	 * @return     String
 	 */
 	public static String [toJavaMethod(op.name)/](Request req, Response res) {
 		return "Example Response"; // replace this with the service implementation
